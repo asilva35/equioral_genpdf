@@ -52,6 +52,8 @@ function Footer()
 
 try{
 
+    if(!isset($_GET['params'])) exit;
+
 $params = json_decode($_GET['params']);
 
 // Creación del objeto de la clase heredada
@@ -66,7 +68,7 @@ $pdf->SetFont('Arial','B',10);
 $pdf->Cell(0,10,utf8_decode('Tratamiento'),0,1);
 $pdf->SetFont('Times','',10);
 $pdf->Multicell(0,5,utf8_decode($params->history->treatment),0,1);
-$x=0;$y=0;$total=4/*count($params->history->photos)*/;
+$x=0;$y=0;$total=count($params->history->photos);
 for($i=0; $i < $total; $i++ ){
     $x = ($i % 3 === 0) ? 0 : $x;
     $y = ($i % 3 === 0) ? $y+1 : $y;
@@ -74,7 +76,7 @@ for($i=0; $i < $total; $i++ ){
     $row = 100 + (50 * $y);
     copy($params->history->photos[$i]->src, '/tmp/localimage'.$i.'.jpg');
     $pdf->Image('/tmp/localimage'.$i.'.jpg',$col,$row,33);
-    sleep(1);
+    usleep(500000);
 }
 
 // copy('https://equioral.s3.amazonaws.com/be3039e8-7269-468e-a508-b5e31afa450a', '/tmp/localimage.jpg');
