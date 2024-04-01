@@ -73,16 +73,11 @@ for($i=0; $i < $total; $i++ ){
     $x = ($i % 3 === 0) ? 0 : $x;
     $y = ($i % 3 === 0) ? $y+1 : $y;
     $col = 10 + (40 * $x++);
-    $row = 100 + (50 * $y);
+    $row = 70 + (50 * $y);
     copy($params->history->photos[$i]->src, '/tmp/localimage'.$i.'.jpg');
     $pdf->Image('/tmp/localimage'.$i.'.jpg',$col,$row,33);
     usleep(500000);
 }
-
-// copy('https://equioral.s3.amazonaws.com/be3039e8-7269-468e-a508-b5e31afa450a', '/tmp/localimage.jpg');
-// $pdf->Image('/tmp/localimage.jpg',10,150,33);
-
-// $pdf->Image('/tmp/localimage.jpg',50,150,33);
 
 $pdf->Output();
 }catch(Exception $e){
